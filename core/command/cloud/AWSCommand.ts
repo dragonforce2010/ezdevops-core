@@ -7,4 +7,8 @@ export class AWSCommand {
     constructor() {
         this.a = 'test'
     }
+
+    public test() {
+        
+    }
 }
