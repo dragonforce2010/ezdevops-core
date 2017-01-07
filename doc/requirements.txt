@@ -1,0 +1,21 @@
+1. client mode
+    (1) ssh connect to remote server
+    (2) deploy microservice to remote server
+    (3) setup remote server envrionment(git svn node docker-compose mvn etc.)
+    (4) consider docker in docker techs
+    (5) patch a build from local to remote
+    (6) start stop single service
+    (7) able to save configurations in mcpbuild.json
+          . mode = server/client
+          . techStack = singleHost/swarm/docker in docker
+          . name
+          . email
+          . database = {}
+    (8) able to read configs
+2. Server mode
+
+3. Theme
+    (1) multiple themes for commandline output
+    (2) what theme defines:
+            - command line color ouput
+            - ascii-art output

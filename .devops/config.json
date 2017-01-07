@@ -1,0 +1,31 @@
+{
+  "deploy_mode": "remote",
+  "deploy_tag": "T11921",
+  "project_name": "alnt",
+  "remote_ip": "172.16.35.118",
+  "remote_path": "~",
+  "remote_username": "root",
+  "svn_rooturl": "svn://172.16.34.213/Alert",
+  "svn_projects": [
+    "alnt-lib-base",
+    "alnt-lib-persistence",
+    "alnt-lib-security",
+    "alnt-lib-redissession",
+    "alnt-redis",
+    "alnt-registry",
+    "alnt-configservice",
+    "alnt-gateway",
+    "alnt-mcpcredsvcwrapper",
+    "alnt-mcpdataservice",
+    "alnt-mcpumservice",
+    "alnt-oauthservice",
+    "alnt-openid-ssoservice",
+    "alnt-setup-fabric-ext",
+    "alnt-setup-fabric",
+    "alnt-setupservice",
+    "alnt-mcp-dbmigration",
+    "alnt-mcp-auditlogservice",
+    "alnt-mcp-notificationservice",
+    "alnt-mcp-schedulerservice"
+  ]
+}

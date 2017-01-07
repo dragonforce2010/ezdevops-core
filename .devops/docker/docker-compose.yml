@@ -1,0 +1,203 @@
+version: '2'
+
+services:
+  alnt-configservice:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-configservice/Dockerfile
+    image: ae/alnt-configservice:1.0
+    ports:
+      - 8888
+    volumes:
+      - ../build/config:/appConfig
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-registry:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-registry/Dockerfile
+    image: ae/alnt-registry:1.0
+    ports:
+      - 8761
+    depends_on:
+      - alnt-configservice
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-gateway:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-gateway/Dockerfile
+    image: ae/alnt-gateway:1.0
+    ports:
+      - 4000
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-oauthservice:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-oauthservice/Dockerfile
+    image: ae/alnt-oauthservice:1.0
+    ports:
+      - 5000
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+      - alnt-setupservice
+      - app_db
+      - mcp-redis
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-notification-service:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-mcp-notificationservice/Dockerfile
+    image: ae/alnt-mcp-notificationservice:1.0
+    ports:
+      - 9017
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+      - app_db
+      - mcp-redis
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-mcp-auditlogservice:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-mcp-auditlogservice/Dockerfile
+    image: ae/alnt-mcp-auditlogservice:1.0
+    ports:
+      - 9015
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+      - app_db
+      - mcp-redis
+      - alnt-artemis
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-setupservice:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-setupservice/Dockerfile
+    image: ae/alnt-setupservice:1.0
+    ports:
+      - 7000
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+      - app_db
+      - mcp-redis
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-ssoservice:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-ssoservice/Dockerfile
+    image: ae/alnt-ssoservice:1.0
+    ports:
+      - 5010
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+      - app_db
+      - mcp-redis
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-mcpcredsvcwrapper:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-mcpcredsvcwrapper/Dockerfile
+    image: ae/alnt-mcpcredsvcwrapper:1.0
+    ports:
+      - 9010
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+      - app_db
+      - mcp-redis
+      - alnt-artemis
+    volumes:
+      - ./dockerfile/alnt-mcpcredsvcwrapper/AlertAdmin@sledevomcbapi.test.suprakim.com.pfx:/app/AlertAdmin@sledevomcbapi.test.suprakim.com.pfx
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-mcpumservice:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-mcpumservice/Dockerfile
+    image: ae/alnt-mcpumservice:1.0
+    ports:
+      - 8128
+    depends_on:
+      - alnt-configservice
+      - alnt-registry
+      - app_db
+      - mcp-redis
+      - alnt-artemis
+    volumes:
+      - ../build/logs:/opt/AlertEnterprise/log
+    env_file:
+      - .env
+
+  alnt-artemis:
+    build:
+      context: ..
+      dockerfile: docker/dockerfile/alnt-artemis/Dockerfile
+    image: ae/alnt-artemis:1.0
+    ports:
+      - 61616
+      - 8161
+      - 5445
+      - 5672
+      - 1883
+      - 61613
+    volumes:
+      - ../build/logs:/opt/apache-artemis/log
+    env_file:
+      - .env
+
+  app_db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=alert_micro
+      - MYSQL_ROOT_PASSWORD=root
+      - lower_case_table_names=1
+    ports:
+      - 3306
+    env_file:
+      - .env
+
+  mcp-redis:
+    image: redis:3.0
+    ports:
+      - 6379
+    env_file:
+      - .env
