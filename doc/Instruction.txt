@@ -1,1 +1,9 @@
-1.
+1. install node 7(include npm)
+2. enter project directory: cd alnt-devops
+3. run below commands:
+    1. npm install
+    2. npm link
+5. run help command to get all the available command
+    1. devops help
+    2. devops init
+    Note that: devops init is the first command need to run before running any other commands
