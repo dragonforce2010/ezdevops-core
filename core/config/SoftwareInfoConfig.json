@@ -1,6 +1,0 @@
-{
-  version: 'v0.1',
-  build_status: 'passing',
-  release_date: '01-05-2016',
-  tech_stack: 'Nodejs, ES6, Typescript'
-}
