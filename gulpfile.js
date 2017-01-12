@@ -6,7 +6,7 @@ let ts = require('gulp-typescript')
 let minify = require('gulp-minify')
 let tsConfig = {
     src: [
-        'core/**/*.ts',
+        'lib/**/*.ts',
         '!node_modules/**/*'
     ],
     compilerOptions: {
@@ -19,7 +19,7 @@ let tsConfig = {
         "emitDecoratorMetadata": true
     },
     out: {
-        compileOut: 'dist/src',
+        compileOut: 'lib',
         minifyOut: 'dist'
     }
 }

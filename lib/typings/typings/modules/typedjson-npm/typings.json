@@ -1,0 +1,10 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/Users/michael.zhang/Documents/development/workspace/workspace4AEMCP/alnt-devops/node_modules/typedjson-npm/package.json",
+    "raw": "npm:typedjson-npm",
+    "main": "js/typed-json.js",
+    "version": "0.1.6",
+    "name": "typedjson-npm"
+  }
+}
